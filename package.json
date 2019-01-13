@@ -1,0 +1,28 @@
+{
+  "name": "flickr_photo_wall",
+  "version": "1.0.0",
+  "description": "A web app that displays photos from flickr's public API. ",
+  "main": "webpack.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nordenskiold/flickr_photo_wall.git"
+  },
+  "author": "Gabriel Nordenskiold",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nordenskiold/flickr_photo_wall/issues"
+  },
+  "homepage": "https://github.com/nordenskiold/flickr_photo_wall#readme",
+  "dependencies": {
+    "bootstrap-material-design": "^4.1.1",
+    "css-loader": "^2.1.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.6",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "bundle-dev": "webpack --config webpack.config.js",
+    "bundle-prod": "webpack --config webpack.config.js --optimize-minimize"
+  }
+}
