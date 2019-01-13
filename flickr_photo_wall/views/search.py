@@ -13,3 +13,9 @@ search_view = flask.Blueprint(
 @search_view.route('/')
 def index():
     return render_template('index.html')
+
+
+@search_view.route('/result', methods=['POST', 'GET'])
+def result():
+    return render_template('index.html')
+

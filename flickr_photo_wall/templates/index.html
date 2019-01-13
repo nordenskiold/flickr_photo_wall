@@ -1,4 +1,24 @@
 {% extends '_base.html' %}
 {% block page_body %}
-    Flickr Photo Wall App
+
+<div class="container">
+    <div class="row">
+        <div class="d-flex col justify-content-center">
+            <form class="form-inline" method="POST" action="{{ url_for('search.result') }}">
+                <span class="bmd-form-group">
+                    <input class="form-control form-control-lg" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search">
+
+                    <button id="submit" class="btn btn-raised btn-primary ml-3" type="submit" role="button">Search</button>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script>
+
+</script>
 {% endblock %}
