@@ -1,5 +1,7 @@
 # Custom
 .pyc
+node_modules/
+flickr_photo_wall/static/dist/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -94,6 +96,8 @@ fabric.properties
 pyvenv.cfg
 .venv
 pip-selfcheck.json
+venv/
+.venv/
 
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
