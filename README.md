@@ -13,13 +13,30 @@ This project uses [Virtualenv](https://virtualenv.pypa.io/en/latest/) to manage 
 * NPM 5.6.0 
 
 ### Setup
+
+Clone repo and navigate to repo directory
+
 ```
 $ cd flickr_photo_wall
+```
+
+Install, initialize and activate virtualenv
+```
 $ pip install virtualenv
-$ source venv/bin/activate
+$ virtualenv env
+$ source env/bin/activate
+```
+
+Install dependencies
+```
 $ pip install -r requirements.txt
 $ npm run bundle-dev
-$ python run_dev.py
+```
+
+### Running the Project
+```
+$ cd flickr_photo_wall
+$ python run_dev.py 
 ```
 
 ### Testing
