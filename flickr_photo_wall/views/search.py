@@ -3,6 +3,8 @@
 import flask
 from flask import current_app, render_template
 
+from flickr_photo_wall import socketio
+
 search_view = flask.Blueprint(
     'search',
     __name__,
@@ -19,3 +21,7 @@ def index():
 def result():
     return render_template('index.html')
 
+
+@socketio.on('my event')
+def handle_my_custom_event(json):
+    print('received json: ' + str(json))
