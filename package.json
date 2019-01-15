@@ -18,7 +18,11 @@
     "css-loader": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "jquery": "^3.3.1",
+    "jquery-bridget": "^2.0.1",
+    "masonry-layout": "^4.2.2",
     "popper.js": "^1.14.6",
+    "snackbarjs": "^1.1.0",
+    "socket.io-client": "^2.2.0",
     "webpack": "^3.10.0"
   },
   "scripts": {

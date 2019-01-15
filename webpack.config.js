@@ -8,6 +8,10 @@ module.exports = {
 	    app: [
 			'./jquery/dist/jquery.min.js',
 			'./popper.js/dist/umd/popper.js',
+			'./snackbarjs/dist/snackbar.min.js',
+			'./socket.io-client/dist/socket.io.slim.js',
+			'./jquery-bridget/jquery-bridget.js',
+			'./masonry-layout/dist/masonry.pkgd.min.js',
 			'./bootstrap-material-design/dist/js/bootstrap-material-design.min.js',
 			'./bootstrap-material-design/dist/css/bootstrap-material-design.css',
 			'../flickr_photo_wall/static/src/js/entry.js'
@@ -19,7 +23,6 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-
 			{
 				test: /\.css$/,
 				loader: ExtractTextPlugin.extract("css-loader")
