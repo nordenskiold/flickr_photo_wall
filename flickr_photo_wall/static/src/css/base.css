@@ -1,0 +1,85 @@
+/* Laptops, Desktops */
+@media (min-width: 1025px) {
+    .grid-sizer {
+        width: 24.6%;
+    }
+
+    .gutter-sizer {
+        width: 0.5%;
+    }
+
+    .card {
+        padding: 0.3%;
+        margin-top: 0.3%;
+        margin-bottom: 0.3%;
+        width: 24.6%;
+    }
+    .card-img-top {
+        height: 22.5vw;
+        object-fit: cover;
+    }
+}
+
+/* Tablets, Ipads (portrait) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .grid-sizer {
+        width: 33%;
+    }
+
+    .gutter-sizer {
+        width: 0.5%;
+    }
+    .card {
+        padding: 0.5%;
+        margin-top: 0.25%;
+        margin-bottom: 0.25%;
+        width: 33%;
+    }
+    .card-img-top {
+        height: 28.2vw;
+        object-fit: cover;
+    }
+}
+
+
+/* Low Resolution Tablets, Mobiles (Landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .grid-sizer {
+        width: 49.2%;
+    }
+
+    .gutter-sizer {
+        width: 1%;
+    }
+    .card {
+        padding: 0.5%;
+        margin-top: 0.5%;
+        margin-bottom: 0.5%;
+        width: 49.2%;
+    }
+    .card-img-top {
+        height: 33.75vw;
+        object-fit: cover;
+    }
+}
+
+/* Most Smartphones (Portrait) */
+@media (min-width: 320px) and (max-width: 480px) {
+    .grid-sizer {
+        width: 100%;
+    }
+
+    .gutter-sizer {
+        width: 1%;
+    }
+    .card {
+        padding: 1%;
+        margin-top: 1%;
+        margin-bottom: 1%;
+        width: 100%;
+    }
+    .card-img-top {
+        height: 67.5vw;
+        object-fit: cover;
+    }
+}

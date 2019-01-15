@@ -1,32 +1,137 @@
 {% extends '_base.html' %}
 {% block page_body %}
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col justify-content-center">
+            <div class="grid">
+                <div class="gutter-sizer"></div>
+                <div class="grid-sizer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="pause" onclick="toggleSocketQuery()" class="btn btn-raised btn-primary ml-3" data-toggle="snackbar" data-content="Slideshow Resumed" data-timeout="1500" role="button">Toggle</button>
+
 <div class="container">
     <div class="row">
         <div class="d-flex col justify-content-center">
-            <form class="form-inline" method="POST" action="{{ url_for('search.result') }}">
+              <div id="search-form" class="form-inline">
                 <span class="bmd-form-group">
-                    <input class="form-control form-control-lg" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search">
+                    <input class="form-control form-control-lg" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search" name="search">
 
-                    <button id="submit" class="btn btn-raised btn-primary ml-3" type="submit" role="button">Search</button>
+                    <button onclick="newQuerySocket()" id="submit" class="btn btn-raised btn-primary ml-3" role="button">Search</button>
                 </span>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 
+
 {% block footer %}
 {{ super() }}
+
 <script>
+var currentImagesHash = {};
+var currentImageCount = 0;
+var queryIntervalMS = 3000;
+var querySocketInterval = null;
+var querySocketIntervalIsRunning = false;
+var currentQuery = null;
+var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+socket.on('connect', function() {
+   socket.emit('search', {data: 'I\'m connected!'});
+});
+
+socket.on('search', function(data) {
+    processSearchResults(data);
+});
+
+
+var $grid = $('.grid').masonry({
+      // options
+      itemSelector: '.card',
+      //percentPosition: true,
+      columnWidth: '.grid-sizer',
+      gutter: '.gutter-sizer',
+      transitionDuration: '0.8s'
+  });
+
+
+function processSearchResults(data) {
+       for (var item in data) {
+           if (!(data[item] in currentImagesHash)) {
+
+               if (currentImageCount >= 20) {
+                   console.log("Removed");
+                    var lastCard = $('.grid .card').last();
+                    lastCard.remove();
+               } else {
+                   currentImageCount++;
+               }
+
+               currentImagesHash[data[item]] = true;
+
+               var image = $('<img>');
+               image.attr('src', data[item]);
+               image.addClass('card-img-top');
+
+               var card = $('<div></div>');
+               card.addClass('card');
+               card.append(image);
+
+               console.log(data[item]);
+               $grid.prepend(card)
+                    .masonry( 'prepended', card )
+                    .masonry( 'reloadItems' )
+                    .masonry( 'layout' );
+           }
+       }
+}
+
+function newQuerySocket() {
+    clearInterval(querySocketInterval);
+    currentQuery = $('input[name="search"]').val();
+    // If custom queryIntervalMS, set it here
+    startSocketQuery();
+
+}
+
+
+function startSocketQuery() {
+    socket.emit('search', {search: currentQuery});
+    querySocketInterval = setInterval(() => {
+        socket.emit('search', {search: currentQuery});
+    }, queryIntervalMS);
+    querySocketIntervalIsRunning = true;
+}
+
+
+function stopSocketQuery() {
+    clearInterval(querySocketInterval);
+    querySocketIntervalIsRunning = false;
+}
+
+
+function toggleSocketQuery() {
+    var toggleButton = $('#pause');
+
+    if (querySocketIntervalIsRunning) {
+        console.log("Stopping query ----------");
+        toggleButton.attr('data-content', 'Slideshow Paused');
+        stopSocketQuery();
+    } else {
+        console.log("Starting query ++++++++++")
+        toggleButton.attr('data-content', 'Slideshow Resumed');
+        startSocketQuery();
+    }
+}
+
 
 </script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-    socket.on('connect', function() {
-        socket.emit('my event', {data: 'I\'m connected!'});
-    });
-</script>
+
 
 {% endblock %}

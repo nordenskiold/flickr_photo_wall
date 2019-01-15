@@ -14,7 +14,8 @@ module.exports = {
 			'./masonry-layout/dist/masonry.pkgd.min.js',
 			'./bootstrap-material-design/dist/js/bootstrap-material-design.min.js',
 			'./bootstrap-material-design/dist/css/bootstrap-material-design.css',
-			'../flickr_photo_wall/static/src/js/entry.js'
+			'../flickr_photo_wall/static/src/js/entry.js',
+			'../flickr_photo_wall/static/src/css/base.css'
         ]
     },
 	output: {
