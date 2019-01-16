@@ -32,11 +32,11 @@ module.exports = {
 			},
 			{
 				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: "url-loader?publicPath=../&name=./../static/fonts/[hash].[ext]&limit=10000&mimetype=application/font-woff"
+				loader: "url-loader?publicPath=../&name=./../static/dist/fonts/[hash].[ext]&limit=10000&mimetype=application/font-woff"
 			},
 			{
 				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: "file-loader?publicPath=../&name=./../static/fonts/[hash].[ext]"
+				loader: "file-loader?publicPath=../&name=./../static/dist/fonts/[hash].[ext]"
 			},
 			{ test: /\.png$/, loader: "url-loader?mimetype=image/png" },
 			{ test: /\.gif$/, loader: "url-loader?mimetype=image/gif" }
