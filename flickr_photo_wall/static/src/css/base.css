@@ -105,6 +105,30 @@
     }
 }
 
+/* Tiny screens */
+@media (max-width: 320px) {
+    .grid-sizer {
+        width: 100%;
+    }
+
+    .gutter-sizer {
+        width: 1%;
+    }
+    .flickr-img.card {
+        padding: 1%;
+        margin-bottom: 2%;
+        width: 100%;
+    }
+    .flickr-img.card-img-top {
+        height: 100vw;
+        object-fit: cover;
+    }
+
+    #search-input {
+        width: 75vw;
+    }
+}
+
 
 /*
 * Colors
