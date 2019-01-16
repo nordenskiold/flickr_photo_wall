@@ -26,7 +26,7 @@ def configure_bp(app):
     Additional blueprints will be added here as the project grows
     """
     from flickr_photo_wall.views import search
-    app.register_blueprint(search.search_view, url_prefix='/search')
+    app.register_blueprint(search.search_view, url_prefix='/')
 
 
 if __name__ == '__main__':
