@@ -33,7 +33,7 @@ $ source env/bin/activate
 
 Install dependencies
 ```
-$ (env) pip install -r requirements.txt
+(env) $ pip install -r requirements.txt
 $ npm install
 $ npm run bundle-dev
 ```
