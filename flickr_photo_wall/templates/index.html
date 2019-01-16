@@ -109,11 +109,11 @@ function processSearchResults(data) {
 
                 let image = $('<img>');
                 image.attr('src', data[item]);
-                image.addClass('card-img-top');
+                image.addClass('flickr-img card-img-top');
 
                 let card = $('<div></div>');
 
-                card.addClass('card')
+                card.addClass('flickr-img card')
                     .append(image);
 
                 $grid.prepend(card)
