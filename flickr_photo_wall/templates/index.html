@@ -1,8 +1,45 @@
 {% extends '_base.html' %}
-{% block page_body %}
+{% block title %} flickr Image Search {% endblock %}
+{% block nav_items_right %}
+{{ super() }}
+  <li class="nav-item">
+        <a style="display: none" id="redo-href" class="nav-link py-1 px-3" href="#" onclick="newSearch()">
+            <span class="oi oi-magnifying-glass"></span>
+        </a>
+  </li>
+  <li class="nav-item">
+        <a style="display: none" id="pause-href" class="nav-link py-1 px-3" href="#" onclick="toggleSocketQuery()" data-toggle="snackbar" data-content="Slideshow Resumed" data-timeout="1500">
+            <span id="pause-icon" class="oi oi-media-pause"></span>
+        </a>
+  </li>
+{% endblock %}
 
-<div class="container-fluid">
+{% block page_body %}
+<div id="search-container" class="container mt-5">
     <div class="row">
+        <div class="d-flex col justify-content-center">
+            <h1 class="site-header mt-4 mb-0 text-center"><span class="flickr-blue">flick</span><span class="flickr-pink">r</span> Image Search</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex col justify-content-center">
+            <h6 class="text-center d-block">Search public flickr images by specifying tags.<br> An empty query returns all recent images.</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex col justify-content-center">
+            <span class="bmd-form-group justify-content-center text-center pt-4">
+                <input id="search-input" class="form-control form-control-lg form-control-success" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search" name="search">
+
+                <button onclick="newQuerySocket()" id="submit" class="btn btn-raised btn-primary my-4 ml-3" role="button">Search</button>
+            </span>
+        </div>
+    </div>
+</div>
+<div id="loader-placeholder"></div>
+
+<div id="result-container" class="container-fluid">
+    <div class="row mt-2">
         <div class="col justify-content-center">
             <div class="grid">
                 <div class="gutter-sizer"></div>
@@ -12,21 +49,8 @@
     </div>
 </div>
 
-<button id="pause" onclick="toggleSocketQuery()" class="btn btn-raised btn-primary ml-3" data-toggle="snackbar" data-content="Slideshow Resumed" data-timeout="1500" role="button">Toggle</button>
 
-<div class="container">
-    <div class="row">
-        <div class="d-flex col justify-content-center">
-              <div id="search-form" class="form-inline">
-                <span class="bmd-form-group">
-                    <input class="form-control form-control-lg" id="search-input" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search" name="search">
 
-                    <button onclick="newQuerySocket()" id="submit" class="btn btn-raised btn-primary ml-3" role="button">Search</button>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 
@@ -41,63 +65,58 @@ var querySocketInterval = null;
 var querySocketIntervalIsRunning = false;
 var currentQuery = null;
 var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-socket.on('connect', function() {
-   socket.emit('search', {data: 'I\'m connected!'});
+var $grid = $('.grid').masonry({
+    itemSelector: '.card',
+    columnWidth: '.grid-sizer',
+    gutter: '.gutter-sizer',
+    transitionDuration: '0.8s'
 });
 
 socket.on('search', function(data) {
-    processSearchResults(data);
+    processSearchResults(data)
+        .then(() => {
+            drawSearchResults();
+        });
 });
 
 
-var $grid = $('.grid').masonry({
-      // options
-      itemSelector: '.card',
-      //percentPosition: true,
-      columnWidth: '.grid-sizer',
-      gutter: '.gutter-sizer',
-      transitionDuration: '0.8s'
-  });
-
-
 function processSearchResults(data) {
-       for (var item in data) {
-           if (!(data[item] in currentImagesHash)) {
+    return new Promise(function(resolve, reject) {
+        for (let item in data) {
+            if (!(data[item] in currentImagesHash)) {
 
-               if (currentImageCount >= 20) {
-                   console.log("Removed");
-                    var lastCard = $('.grid .card').last();
+                if (currentImageCount >= 20) {
+                    let lastCard = $('.grid .card').last();
                     lastCard.remove();
-               } else {
-                   currentImageCount++;
-               }
+                } else {
+                    currentImageCount++;
+                }
 
-               currentImagesHash[data[item]] = true;
+                currentImagesHash[data[item]] = true;
 
-               var image = $('<img>');
-               image.attr('src', data[item]);
-               image.addClass('card-img-top');
+                let image = $('<img>');
+                image.attr('src', data[item]);
+                image.addClass('card-img-top');
 
-               var card = $('<div></div>');
-               card.addClass('card');
-               card.append(image);
+                let card = $('<div></div>');
 
-               console.log(data[item]);
-               $grid.prepend(card)
-                    .masonry( 'prepended', card )
-                    .masonry( 'reloadItems' )
-                    .masonry( 'layout' );
-           }
-       }
+                card.addClass('card')
+                    .append(image);
+
+                $grid.prepend(card)
+                    .masonry('prepended', card)
+                    .masonry('reloadItems')
+                    .masonry('layout');
+            }
+        }
+        resolve(undefined);
+    });
 }
 
 function newQuerySocket() {
-    clearInterval(querySocketInterval);
+    drawSearchLoading();
     currentQuery = $('input[name="search"]').val();
-    // If custom queryIntervalMS, set it here
     startSocketQuery();
-
 }
 
 
@@ -117,17 +136,59 @@ function stopSocketQuery() {
 
 
 function toggleSocketQuery() {
-    var toggleButton = $('#pause');
-
     if (querySocketIntervalIsRunning) {
-        console.log("Stopping query ----------");
-        toggleButton.attr('data-content', 'Slideshow Paused');
+        setMediaControlsPaused();
         stopSocketQuery();
     } else {
-        console.log("Starting query ++++++++++")
-        toggleButton.attr('data-content', 'Slideshow Resumed');
+        setMediaControlsPlaying();
         startSocketQuery();
     }
+}
+
+function setMediaControlsPaused() {
+    $('#pause-href').attr('data-content', 'Slideshow Paused');
+
+    let toggleIcon = $('#pause-icon');
+    toggleIcon.removeClass('oi-media-pause');
+    toggleIcon.addClass('oi-media-play');
+}
+
+function setMediaControlsPlaying() {
+    $('#pause-href').attr('data-content', 'Slideshow Resumed');
+
+    let toggleIcon = $('#pause-icon');
+    toggleIcon.removeClass('oi-media-play');
+    toggleIcon.addClass('oi-media-pause');
+}
+
+
+function drawSearchLoading() {
+    $('#search-container').hide();
+    $('#loader-placeholder').addClass('loader');
+}
+
+function drawSearchResults() {
+    $('#result-container').show();
+    $('#loader-placeholder').removeClass('loader');
+    $('#pause-href').show();
+    $('#redo-href').show();
+    $grid.masonry('layout').masonry('reloadItems');
+}
+
+function drawSearch() {
+    $('#search-container').show();
+    $('#result-container').hide();
+    $('#pause-href').hide();
+    $('#redo-href').hide();
+}
+
+function newSearch() {
+    stopSocketQuery();
+    currentImagesHash = {};
+    currentImageCount = 0;
+    $('#result-container .grid .card').remove();
+    setMediaControlsPlaying();
+    drawSearch();
 }
 
 

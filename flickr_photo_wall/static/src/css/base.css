@@ -26,6 +26,11 @@
         height: 22.5vw;
         object-fit: cover;
     }
+
+    #search-input {
+        width: 22vw;
+    }
+
 }
 
 /* Tablets, Ipads (portrait) */
@@ -45,6 +50,10 @@
     .card-img-top {
         height: 28.2vw;
         object-fit: cover;
+    }
+
+    #search-input {
+        width: 55vw;
     }
 }
 
@@ -66,6 +75,10 @@
         height: 33.75vw;
         object-fit: cover;
     }
+
+    #search-input {
+        width: 75vw;
+    }
 }
 
 /* Most Smartphones (Portrait) */
@@ -85,6 +98,10 @@
     .card-img-top {
         height: 67.5vw;
         object-fit: cover;
+    }
+
+    #search-input {
+        width: 75vw;
     }
 }
 
