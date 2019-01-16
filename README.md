@@ -20,12 +20,13 @@ Tested working on Firefox 63.0, Chrome 71 on Ubuntu and Windows 10.
 Clone repo and navigate to repo directory
 
 ```
+$ git clone https://github.com/nordenskiold/flickr_photo_wall.git
 $ cd flickr_photo_wall
 ```
 
 Install, initialize and activate virtualenv
 ```
-$ pip install virtualenv
+$ pip install virtualenv==15.0.1
 $ virtualenv env
 $ source env/bin/activate
 ```
