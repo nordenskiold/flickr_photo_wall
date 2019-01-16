@@ -1,3 +1,12 @@
+/*
+* This file contains general css styling.
+*/
+
+
+/*
+* Media Queries
+*/
+
 /* Laptops, Desktops */
 @media (min-width: 1025px) {
     .grid-sizer {
@@ -10,8 +19,7 @@
 
     .card {
         padding: 0.3%;
-        margin-top: 0.3%;
-        margin-bottom: 0.3%;
+        margin-bottom: 0.6%;
         width: 24.6%;
     }
     .card-img-top {
@@ -31,8 +39,7 @@
     }
     .card {
         padding: 0.5%;
-        margin-top: 0.25%;
-        margin-bottom: 0.25%;
+        margin-bottom: 0.5%;
         width: 33%;
     }
     .card-img-top {
@@ -40,7 +47,6 @@
         object-fit: cover;
     }
 }
-
 
 /* Low Resolution Tablets, Mobiles (Landscape) */
 @media (min-width: 481px) and (max-width: 767px) {
@@ -53,8 +59,7 @@
     }
     .card {
         padding: 0.5%;
-        margin-top: 0.5%;
-        margin-bottom: 0.5%;
+        margin-bottom: 1%;
         width: 49.2%;
     }
     .card-img-top {
@@ -74,8 +79,7 @@
     }
     .card {
         padding: 1%;
-        margin-top: 1%;
-        margin-bottom: 1%;
+        margin-bottom: 2%;
         width: 100%;
     }
     .card-img-top {
@@ -83,3 +87,33 @@
         object-fit: cover;
     }
 }
+
+
+/*
+* Colors
+*/
+.flickr-blue {
+    color: #0063dc;
+}
+
+.flickr-pink {
+    color: #ff0084;
+}
+
+
+/*
+* Custom classes
+*/
+.site-header {
+    font-size: 3.5rem;
+}
+
+
+/*
+* Bootstrap Overrides
+*/
+.nav-brand {
+    padding-top: 6px !important;
+}
+
+
