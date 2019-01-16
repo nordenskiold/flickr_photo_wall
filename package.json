@@ -14,15 +14,19 @@
   },
   "homepage": "https://github.com/nordenskiold/flickr_photo_wall#readme",
   "dependencies": {
+    "@icon/open-iconic": "^1.1.1-alpha.2",
     "bootstrap-material-design": "^4.1.1",
     "css-loader": "^2.1.0",
     "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^3.0.1",
     "jquery": "^3.3.1",
     "jquery-bridget": "^2.0.1",
     "masonry-layout": "^4.2.2",
     "popper.js": "^1.14.6",
+    "roboto-fontface": "^0.10.0",
     "snackbarjs": "^1.1.0",
     "socket.io-client": "^2.2.0",
+    "url-loader": "^1.1.2",
     "webpack": "^3.10.0"
   },
   "scripts": {
