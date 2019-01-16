@@ -1,5 +1,5 @@
 # Custom
-.pyc
+*.pyc
 node_modules/
 flickr_photo_wall/static/dist/
 
