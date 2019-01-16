@@ -4,7 +4,7 @@ from flickr_photo_wall.controllers.flickr_api import FlickrAPI
 from flickr_photo_wall.tests.base import FlickrPhotoWallTestCase
 
 
-class SearchTestCase(FlickrPhotoWallTestCase):
+class FlickrAPITestCase(FlickrPhotoWallTestCase):
     """Test cases for FlickrAPI controller"""
 
     @patch('flickr_photo_wall.controllers.flickr_api.requests')
