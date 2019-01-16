@@ -40,7 +40,6 @@ $ npm run bundle-dev
 
 ### Running the Project
 ```
-$ cd flickr_photo_wall
 $ python run_dev.py 
 ```
 You should now have a web server running by default on [http://0.0.0.0:8080](http://0.0.0.0:8080)
@@ -48,5 +47,5 @@ You should now have a web server running by default on [http://0.0.0.0:8080](htt
 ### Testing
 This project uses [pytest](https://github.com/pytest-dev/pytest) and [flask-testing](https://github.com/jarus/flask-testing) for testing. To run tests, simply:
 
-`$ (env) python -m pytest -v flickr_photo_wall/tests/`
+`(env) $ python -m pytest -v flickr_photo_wall/tests/`
 
