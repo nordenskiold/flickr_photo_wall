@@ -1,77 +1,84 @@
 {% extends '_base.html' %}
 {% block title %} flickr Image Search {% endblock %}
 {% block nav_items_right %}
-{{ super() }}
-  <li class="nav-item">
+    {{ super() }}
+    <li class="nav-item">
         <a style="display: none" id="redo-href" class="nav-link py-1 px-3" href="#" onclick="newSearch()">
             <span class="oi oi-magnifying-glass"></span>
         </a>
-  </li>
-  <li class="nav-item">
-        <a style="display: none" id="pause-href" class="nav-link py-1 px-3" href="#" onclick="toggleSocketQuery()" data-toggle="snackbar" data-content="Slideshow Resumed" data-timeout="1500">
+    </li>
+    <li class="nav-item">
+        <a style="display: none" id="pause-href" class="nav-link py-1 px-3" href="#" onclick="toggleSocketQuery()"
+           data-toggle="snackbar" data-content="Slideshow Resumed" data-timeout="1500">
             <span id="pause-icon" class="oi oi-media-pause"></span>
         </a>
-  </li>
+    </li>
 {% endblock %}
 
 {% block page_body %}
-<div id="search-container" class="container mt-5">
-    <div class="row">
-        <div class="d-flex col justify-content-center">
-            <h1 class="site-header mt-4 mb-0 text-center"><span class="flickr-blue">flick</span><span class="flickr-pink">r</span> Image Search</h1>
+    <div id="search-container" class="container mt-5">
+        <div class="row">
+            <div class="d-flex col justify-content-center">
+                <h1 class="site-header mt-4 mb-0 text-center">
+                    <span class="flickr-blue">flick</span><span class="flickr-pink">r</span> Image Search
+                </h1>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="d-flex col justify-content-center">
-            <h6 class="text-center d-block">Search public flickr images by specifying tags.<br> An empty query returns all recent images.</h6>
+        <div class="row">
+            <div class="d-flex col justify-content-center">
+                <h6 class="text-center d-block">Search public flickr images by specifying tags.
+                                            <br> An empty query returns all recent images.
+                </h6>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="d-flex col justify-content-center">
+        <div class="row">
+            <div class="d-flex col justify-content-center">
             <span class="bmd-form-group justify-content-center text-center pt-4">
-                <input id="search-input" class="form-control form-control-lg form-control-success" placeholder="Search..." autocomplete="off" spellcheck="false" role="combobox" type="search" name="search">
+                <input id="search-input" class="form-control form-control-lg form-control-success"
+                       placeholder="Search..." autocomplete="off" spellcheck="false" type="search" name="search">
 
-                <button onclick="newQuerySocket()" id="submit" class="btn btn-raised btn-primary my-4 ml-3" role="button">Search</button>
+                <button onclick="newQuerySocket()" id="submit" class="btn btn-raised btn-primary my-4 ml-3">Search</button>
             </span>
-        </div>
-    </div>
-</div>
-<div id="loader-placeholder"></div>
-
-<div id="result-container" class="container-fluid">
-    <div class="row mt-2">
-        <div class="col justify-content-center">
-            <div class="grid">
-                <div class="gutter-sizer"></div>
-                <div class="grid-sizer"></div>
             </div>
         </div>
     </div>
-</div>
 
+    <div id="loader-placeholder"></div>
 
-
+    <div id="result-container" class="container-fluid">
+        <div class="row mt-2">
+            <div class="col justify-content-center">
+                <div class="grid">
+                    <div class="gutter-sizer"></div>
+                    <div class="grid-sizer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
-
 
 {% block footer %}
 {{ super() }}
 
 <script>
-var currentImagesHash = {};
-var currentImageCount = 0;
-var queryIntervalMS = 3000;
-var querySocketInterval = null;
-var querySocketIntervalIsRunning = false;
-var currentQuery = null;
-var socket = io.connect('http://' + document.domain + ':' + location.port);
-var $grid = $('.grid').masonry({
+let currentImagesHash = {}; // Hashmap to keep track of images that have been processed
+let currentImageCount = 0;  // Current count of images that have been processed; 0 <= currentImageCount <= 20
+let queryIntervalMS = 3000; // Interval in milliseconds to query socket
+let querySocketInterval = null;  // JS Interval representing the function that continuously queries the backend socket
+let querySocketIntervalIsRunning = false;  // Is the above interval running?
+let currentQuery = null;  // Current set of tags used to query the backend
+const socket = io.connect('http://' + document.domain + ':' + location.port); // Initialize socketio
+const $grid = $('.grid').masonry({ // Initialize masonry
     itemSelector: '.card',
     columnWidth: '.grid-sizer',
     gutter: '.gutter-sizer',
     transitionDuration: '0.8s'
 });
 
+/*
+* Listener for 'search' messages on the socket.
+* Processes data returned from search and draws results to screen
+*/
 socket.on('search', function(data) {
     processSearchResults(data)
         .then(() => {
@@ -79,7 +86,9 @@ socket.on('search', function(data) {
         });
 });
 
-
+/*
+* Create card elements given some data
+*/
 function processSearchResults(data) {
     return new Promise(function(resolve, reject) {
         for (let item in data) {
@@ -113,13 +122,19 @@ function processSearchResults(data) {
     });
 }
 
+/*
+* Start a new search query against the backend.
+* Draws a loader to the frontend and sets the current tag query.
+*/
 function newQuerySocket() {
     drawSearchLoading();
     currentQuery = $('input[name="search"]').val();
     startSocketQuery();
 }
 
-
+/*
+* Emit a "search" message to the backend, effectively requesting new search results.
+*/
 function startSocketQuery() {
     socket.emit('search', {search: currentQuery});
     querySocketInterval = setInterval(() => {
@@ -128,13 +143,17 @@ function startSocketQuery() {
     querySocketIntervalIsRunning = true;
 }
 
-
+/*
+* Stop querying the backend by clearing the current Interval responsible for querying
+*/
 function stopSocketQuery() {
     clearInterval(querySocketInterval);
     querySocketIntervalIsRunning = false;
 }
 
-
+/*
+* Toggle the Interval responsible for querying and change the frontend media controls to reflect the current state
+*/
 function toggleSocketQuery() {
     if (querySocketIntervalIsRunning) {
         setMediaControlsPaused();
@@ -145,6 +164,9 @@ function toggleSocketQuery() {
     }
 }
 
+/*
+* Set the frontend mediacontrols and snackbar message to be paused.
+*/
 function setMediaControlsPaused() {
     $('#pause-href').attr('data-content', 'Slideshow Paused');
 
@@ -153,6 +175,9 @@ function setMediaControlsPaused() {
     toggleIcon.addClass('oi-media-play');
 }
 
+/*
+* Set the frontend mediacontrols and snackbar message to be resumed.
+*/
 function setMediaControlsPlaying() {
     $('#pause-href').attr('data-content', 'Slideshow Resumed');
 
@@ -161,12 +186,17 @@ function setMediaControlsPlaying() {
     toggleIcon.addClass('oi-media-pause');
 }
 
-
+/*
+* Render the loading screen
+*/
 function drawSearchLoading() {
     $('#search-container').hide();
     $('#loader-placeholder').addClass('loader');
 }
 
+/*
+* Render the search results
+*/
 function drawSearchResults() {
     $('#result-container').show();
     $('#loader-placeholder').removeClass('loader');
@@ -175,6 +205,9 @@ function drawSearchResults() {
     $grid.masonry('layout').masonry('reloadItems');
 }
 
+/*
+* Render the default search view
+*/
 function drawSearch() {
     $('#search-container').show();
     $('#result-container').hide();
@@ -182,17 +215,16 @@ function drawSearch() {
     $('#redo-href').hide();
 }
 
+/*
+* Reset the state of the application and redraw as if the page had been refreshed.
+*/
 function newSearch() {
     stopSocketQuery();
     currentImagesHash = {};
     currentImageCount = 0;
-    $('#result-container .grid .card').remove();
     setMediaControlsPlaying();
     drawSearch();
+    $('#result-container .grid .card').remove();
 }
-
-
 </script>
-
-
 {% endblock %}
