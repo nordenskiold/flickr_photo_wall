@@ -22,4 +22,3 @@ class FlickrAPI(object):
         image_url_list = [item['media']['m'] for item in items]
 
         return image_url_list
-

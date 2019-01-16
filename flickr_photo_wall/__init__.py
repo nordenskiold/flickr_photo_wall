@@ -6,7 +6,7 @@ app = Flask(__name__, instance_relative_config=True)
 socketio = SocketIO(app)
 
 
-def setup_app(config="Default"):
+def setup_app(config="default"):
     """Configure the flask app and return references"""
     configure_cfg(app, config)
     configure_bp(app)

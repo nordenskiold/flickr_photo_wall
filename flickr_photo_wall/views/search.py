@@ -5,7 +5,7 @@ from flask import render_template
 from flask_socketio import emit
 
 from flickr_photo_wall import socketio
-from flickr_photo_wall.controllers.search import FlickrAPI
+from flickr_photo_wall.controllers.flickr_api import FlickrAPI
 
 search_view = flask.Blueprint(
     'search',

@@ -31,7 +31,8 @@ $ source env/bin/activate
 
 Install dependencies
 ```
-$ pip install -r requirements.txt
+$ (env) pip install -r requirements.txt
+$ npm install
 $ npm run bundle-dev
 ```
 
@@ -43,5 +44,7 @@ $ python run_dev.py
 You should now have a web server running by default on [http://0.0.0.0:8080](http://0.0.0.0:8080)
 
 ### Testing
-`TBD`
+This project uses [pytest](https://github.com/pytest-dev/pytest) and [flask-testing](https://github.com/jarus/flask-testing) for testing. To run tests, simply:
+
+`$ (env) python -m pytest -v flickr_photo_wall/tests/`
 
