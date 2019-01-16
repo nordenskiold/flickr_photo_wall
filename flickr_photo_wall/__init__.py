@@ -1,3 +1,4 @@
+"""The main file, responsible for creating and setting up the flask app"""
 from flask import Flask
 from flask_socketio import SocketIO
 

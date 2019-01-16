@@ -16,13 +16,14 @@ search_view = flask.Blueprint(
 
 @search_view.route('/')
 def index():
+    """The default route for this app"""
     return render_template('index.html')
 
 
 @socketio.on('search')
 def search_listener(request):
+    """A socketio listener for incoming search requests"""
     tags = filter(None, request['search'].split(' '))
     flickr = FlickrAPI()
-    result = flickr.search_by_tags(tags)
-    print('\n\n\nreceived tags: ' + str(tags) + '\n\n\n')
+    result = flickr.get_images_by_tags(tags)
     emit('search', result, json=True)
