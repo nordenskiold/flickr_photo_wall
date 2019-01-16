@@ -7,10 +7,12 @@ This project contains a web app that displays photos from flickr's public API. U
 ### Requirements
 This project uses [Virtualenv](https://virtualenv.pypa.io/en/latest/) to manage its python dependencies, and [Node Package Manager](https://www.npmjs.com/) to manage its javascript dependencies. The following is a list of packages required to run this project and the versions this project has been tested with.
 
-* Python 3.7.2
+* Python 2.7.12
 * Pip 18.1
 * Virtualenv 15.0.1
 * NPM 5.6.0 
+
+Tested on Firefox 57.0
 
 ### Setup
 
@@ -38,9 +40,8 @@ $ npm run bundle-dev
 $ cd flickr_photo_wall
 $ python run_dev.py 
 ```
+You should now have a web server running by default on [http://0.0.0.0:8080](http://0.0.0.0:8080)
 
 ### Testing
 `TBD`
-
-
 
