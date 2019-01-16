@@ -81,8 +81,10 @@ const $grid = $('.grid').masonry({ // Initialize masonry
 */
 socket.on('search', function(data) {
     processSearchResults(data)
-        .then(() => {
-            drawSearchResults();
+        .then((res) => {
+            if (res === true) {
+                drawSearchResults();
+            }
         });
 });
 
@@ -91,8 +93,10 @@ socket.on('search', function(data) {
 */
 function processSearchResults(data) {
     return new Promise(function(resolve, reject) {
+        let newImagesAdded = false;
         for (let item in data) {
             if (!(data[item] in currentImagesHash)) {
+                newImagesAdded = true;
 
                 if (currentImageCount >= 20) {
                     let lastCard = $('.grid .card').last();
@@ -118,7 +122,7 @@ function processSearchResults(data) {
                     .masonry('layout');
             }
         }
-        resolve(undefined);
+        resolve(newImagesAdded);
     });
 }
 
