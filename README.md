@@ -1,7 +1,7 @@
 # Flickr Photo Wall
 
 ### About
-This project contains a web app that displays photos from flickr's public API. Users can search photos by tags and are presented with a slideshow of the results. The API is polled in intervals and the results will update dynamically as new images are uploaded to flickr. The slideshow will always display the latest photos returned from the API and cull older results.
+This project contains a web app that displays photos from flickr's public API. Users can search photos by tags and are presented with a slideshow of the results. The API is polled in intervals and the results will update dynamically as new images are uploaded to flickr. The slideshow will always display the latest photos returned from the API and cull older results. Live demo coming soon.
 
 ![](flickr_photo_wall_demo.gif)
 
@@ -13,7 +13,7 @@ This project uses [Virtualenv](https://virtualenv.pypa.io/en/latest/) to manage 
 * Virtualenv 15.0.1
 * NPM 5.6.0 
 
-Tested on Firefox 57.0
+Tested working on Firefox 63.0, Chrome 71 on Ubuntu and Windows 10.
 
 ### Setup
 
