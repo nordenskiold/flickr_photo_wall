@@ -1,3 +1,5 @@
+"""This file is used for running the app locally"""
+
 from flickr_photo_wall import setup_app
 
 app, socketio = setup_app(config='default')

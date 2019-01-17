@@ -1,7 +1,9 @@
 # Flickr Photo Wall
 
 ### About
-This project contains a web app that displays photos from flickr's public API. Users can search photos by tags and are presented with a slideshow of the results. The API is polled in intervals and the results will update dynamically as new images are uploaded to flickr. The slideshow will always display the latest photos returned from the API and cull older results. Live demo coming soon.
+This project contains a web app that displays photos from flickr's public API. Users can search photos by tags and are presented with a slideshow of the results. The API is polled in intervals and the results will update dynamically as new images are uploaded to flickr. The slideshow will always display the latest photos returned from the API and cull older results. 
+
+[Live demo](https://quiet-scrubland-85365.herokuapp.com/)
 
 ![](flickr_photo_wall_demo.gif)
 
@@ -47,5 +49,6 @@ You should now have a web server running by default on [http://0.0.0.0:8080](htt
 ### Testing
 This project uses [pytest](https://github.com/pytest-dev/pytest) and [flask-testing](https://github.com/jarus/flask-testing) for testing. To run tests, simply:
 
-`(env) $ python -m pytest -v flickr_photo_wall/tests/`
-
+```
+(env) $ python -m pytest -v flickr_photo_wall/tests/
+```

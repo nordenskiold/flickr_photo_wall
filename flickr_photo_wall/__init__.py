@@ -31,5 +31,5 @@ def configure_bp(app):
 
 
 if __name__ == '__main__':
-    app, socketio = setup_app()
+    app, socketio = setup_app(config='default')
     socketio.run(app=app, port=8080, host='0.0.0.0', debug=True)

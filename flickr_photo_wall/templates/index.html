@@ -67,7 +67,7 @@ let queryIntervalMS = 3000; // Interval in milliseconds to query socket
 let querySocketInterval = null;  // JS Interval representing the function that continuously queries the backend socket
 let querySocketIntervalIsRunning = false;  // Is the above interval running?
 let currentQuery = null;  // Current set of tags used to query the backend
-const socket = io.connect('http://' + document.domain + ':' + location.port); // Initialize socketio
+const socket = io.connect(window.location.protocol + '//' + document.domain + ':' + location.port); // Initialize socketio
 const $grid = $('.grid').masonry({ // Initialize masonry
     itemSelector: '.card',
     columnWidth: '.grid-sizer',
