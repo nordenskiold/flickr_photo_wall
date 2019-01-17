@@ -12,6 +12,7 @@ echo "[${green}2/5${textreset}] ${cyan}Building dependencies...${textreset}"
 npm run bundle-dev >/dev/null
 
 echo "[${green}3/5${textreset}] ${cyan}Committing dependencies to deploy branch...${textreset}"
+git add flickr_photo_wall/static/dist/
 git commit -m "Build dependencies" >/dev/null
 
 echo "[${green}4/5${textreset}] ${cyan}Deploying branch 'deploy' to heroku master... ${textreset}"
