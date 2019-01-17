@@ -52,3 +52,9 @@ This project uses [pytest](https://github.com/pytest-dev/pytest) and [flask-test
 ```
 (env) $ python -m pytest -v flickr_photo_wall/tests/
 ```
+
+### Deploying
+This project can easily be deployed in heroku after cloning the repo and following the [Setup](#Setup).
+1. Install [heroku-cli](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+2. `$ heroku login`
+4. `$ sh deploy.sh`
