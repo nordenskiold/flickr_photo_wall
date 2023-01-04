@@ -27,7 +27,7 @@
     "snackbarjs": "^1.1.0",
     "socket.io-client": "^2.2.0",
     "url-loader": "^1.1.2",
-    "webpack": "^3.10.0"
+    "webpack": "^5.75.0"
   },
   "scripts": {
     "bundle-dev": "webpack --config webpack.config.js",
